@@ -3,19 +3,24 @@ import Sidebar from './Sidebar';
 import Navbar from './Navbar';
 
 const Reports = () => {
-  const [filters, setFilters] = useState({
-    reportType: '',
-    fromDate: '',
-    toDate: '',
-  });
+  const [data, setData] = useState({ reportType: '', fromDate: '', toDate: '' })
 
   const handleChange = (e) => {
-    setFilters({ ...filters, [e.target.name]: e.target.value });
-  };
+    console.log(e.target.value);
+    const {name,value} = e.target;
+    setData({...data,[name]: value })
+  }
+
+  const saveform = (e) => {
+    e.preventDefault();
+    alert('form submited...');
+    console.log(data);
+    setData({reportType: '', fromDate: '', toDate: ''})
+  }
+
 
   return (
     <div className="bg-gray-100 h-screen">
-      {/* Grid Container */}
       <div className="grid grid-rows-[4rem_auto_45px] grid-cols-4 gap-1 h-full">
 
         <Sidebar />
@@ -24,52 +29,65 @@ const Reports = () => {
         {/* Main Content */}
         <main className="row-start-2 col-start-2 col-end-5 p-6 space-y-6">
 
-          {/* Header */}
           <div className="flex justify-between items-center">
             <h1 className="text-2xl font-bold">Reports</h1>
           </div>
 
-          {/* Filters */}
+          {/* Filters Form */}
           <div className="bg-white p-6 rounded shadow">
             <h2 className="text-lg font-semibold mb-4">
               Generate Report
             </h2>
 
-            <div className="grid grid-cols-3 gap-4">
-              <select
-                name="reportType"
-                onChange={handleChange}
-                className="border p-2 rounded"
+            <form onSubmit={saveform}>
+              <div className="grid grid-cols-3 gap-4" >
+                {/* Report Type */}
+                <select
+                  id="reportType"
+                  name="reportType"
+                  value={data.reportType}
+                  onChange={handleChange}
+                  className="border p-2 rounded"
+                >
+                  <option value="">Select Report Type</option>
+                  <option value="revenue">Revenue Report</option>
+                  <option value="members">Member Report</option>
+                  <option value="trainers">Trainer Report</option>
+                  <option value="payments">Payment Report</option>
+                  <option value="enquiries">Enquiry Report</option>
+                </select>
+
+                {/* From Date */}
+                <input
+                  type="date"
+                  id="fromDate"
+                  name="fromDate"
+                  value={data.fromDate}
+                  onChange={handleChange}
+                  className="border p-2 rounded"
+                />
+
+                {/* To Date */}
+                <input
+                  type="date"
+                  id="toDate"
+                  name="toDate"
+                  value={data.toDate}
+                  onChange={handleChange}
+                  className="border p-2 rounded"
+                />
+              </div>
+
+              <button
+                type="submit"
+                className="mt-4 bg-indigo-600 text-white px-6 py-2 rounded hover:bg-indigo-700"
               >
-                <option value="">Select Report Type</option>
-                <option value="revenue">Revenue Report</option>
-                <option value="members">Member Report</option>
-                <option value="trainers">Trainer Report</option>
-                <option value="payments">Payment Report</option>
-                <option value="enquiries">Enquiry Report</option>
-              </select>
-
-              <input
-                type="date"
-                name="fromDate"
-                onChange={handleChange}
-                className="border p-2 rounded"
-              />
-
-              <input
-                type="date"
-                name="toDate"
-                onChange={handleChange}
-                className="border p-2 rounded"
-              />
-            </div>
-
-            <button className="mt-4 bg-indigo-600 text-white px-6 py-2 rounded hover:bg-indigo-700">
-              Generate Report
-            </button>
+                Generate Report
+              </button>
+            </form>
           </div>
 
-          {/* Report Summary Cards */}
+          {/* Summary Cards */}
           <div className="grid grid-cols-4 gap-4">
             <div className="bg-white p-4 rounded shadow">
               <h3 className="text-gray-500">Total Revenue</h3>
@@ -107,19 +125,11 @@ const Reports = () => {
                   <th className="p-2 text-left">Status</th>
                 </tr>
               </thead>
-
               <tbody>
                 <tr className="border-b hover:bg-gray-50">
                   <td className="p-2">20 Jan 2025</td>
                   <td className="p-2">Monthly Membership</td>
                   <td className="p-2">₹1,500</td>
-                  <td className="p-2 text-green-600">Paid</td>
-                </tr>
-
-                <tr className="border-b hover:bg-gray-50">
-                  <td className="p-2">21 Jan 2025</td>
-                  <td className="p-2">Quarterly Membership</td>
-                  <td className="p-2">₹4,000</td>
                   <td className="p-2 text-green-600">Paid</td>
                 </tr>
               </tbody>
@@ -128,11 +138,9 @@ const Reports = () => {
 
         </main>
 
-        {/* Footer */}
         <footer className="row-start-3 col-start-2 col-end-5 bg-gray-200 flex items-center justify-center text-sm">
           © 2025 Gym Management System
         </footer>
-
       </div>
     </div>
   );
