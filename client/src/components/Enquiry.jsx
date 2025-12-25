@@ -14,10 +14,9 @@ const Enquiry = () => {
 
   const saveForm = (e) => {
     alert('Form Submited..')
-e.preventDefault();
-console.log(data);
-setData({ fullName: '', phoneNumber: '', email: '', plan: '', source: '', status: '', notes: '' })
-
+    e.preventDefault();
+    console.log(data);
+    setData({ fullName: '', phoneNumber: '', email: '', plan: '', source: '', status: '', notes: '' })
   }
 
   return (
