@@ -4,8 +4,23 @@ import Navbar from './Navbar';
 
 const Payment = () => {
   const [showForm, setShowForm] = useState(false);
+  const [data,setData] = useState({memberName:'',select_plan:'',amount:'',paymentMode:'',date:'',status:'',notes:''});
+
+const dataHandler = (e) => {
+  console.log(e.target.value);
+  const {name,value} = e.target;
+  setData({...data,[name]:value})
+}
+
+const saveForm = (e) => {
+e.preventDefault();
+console.log(data);
+alert('Form Submited...')
+setData({memberName:'',select_plan:'',amount:'',paymentMode:'',date:'',status:'',notes:''})
+}
 
   return (
+    <>
     <div className="bg-gray-100 h-screen">
       {/* Grid Container */}
       <div className="grid grid-rows-[4rem_auto_45px] grid-cols-4 gap-1 h-full">
@@ -35,14 +50,23 @@ const Payment = () => {
                 Add Payment
               </h2>
 
-              <form className="grid grid-cols-2 gap-4">
+              <form className="grid grid-cols-2 gap-4" onSubmit={saveForm}>
                 <input
                   type="text"
                   placeholder="Member Name"
+                  id='memberName'
+                  name='memberName'
+                  value={data.memberName}
+                  onChange={dataHandler}
                   className="border p-2 rounded"
                 />
 
-                <select className="border p-2 rounded">
+                <select className="border p-2 rounded"
+                id='select_plan'
+                name='select_plan'
+                value={data.select_plan}
+                  onChange={dataHandler}
+                >
                   <option>Select Plan</option>
                   <option>Monthly</option>
                   <option>Quarterly</option>
@@ -52,10 +76,19 @@ const Payment = () => {
                 <input
                   type="number"
                   placeholder="Amount (₹)"
+                  id='amount'
+                  name='amount'
+                  value={data.amount}
+                  onChange={dataHandler}
                   className="border p-2 rounded"
                 />
 
-                <select className="border p-2 rounded">
+                <select className="border p-2 rounded"
+                id='paymentMode'
+                name='paymentMode'
+                value={data.paymentMode}
+                  onChange={dataHandler}
+                >
                   <option>Payment Mode</option>
                   <option>Cash</option>
                   <option>UPI</option>
@@ -65,10 +98,19 @@ const Payment = () => {
 
                 <input
                   type="date"
+                  id='date'
+                  name='date'
+                  value={data.date}
+                  onChange={dataHandler}
                   className="border p-2 rounded"
                 />
 
-                <select className="border p-2 rounded">
+                <select className="border p-2 rounded"
+                id='status'
+                name='status'
+                value={data.status}
+                  onChange={dataHandler}
+                >
                   <option>Status</option>
                   <option>Paid</option>
                   <option>Pending</option>
@@ -76,6 +118,10 @@ const Payment = () => {
 
                 <textarea
                   placeholder="Notes (Optional)"
+                  id='notes'
+                  name='notes'
+                  value={data.notes}
+                  onChange={dataHandler}
                   className="border p-2 rounded col-span-2"
                   rows="3"
                 />
@@ -140,6 +186,7 @@ const Payment = () => {
 
       </div>
     </div>
+    </>
   );
 };
 
