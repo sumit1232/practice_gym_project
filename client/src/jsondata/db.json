@@ -1,19 +1,38 @@
 {
-  "posts": [
+  "members": [
     {
       "id": 1,
-      "title": "json-server",
-      "author": "typicode"
+      "name": "Sumit Jadhav",
+      "email": "sumit@example.com",
+      "phone": "9876543210",
+      "membershipType": "Gold",
+      "joinDate": "2024-01-15",
+      "status": "Active"
+    },
+    {
+      "id": 2,
+      "name": "Rahul Patil",
+      "email": "rahul@example.com",
+      "phone": "9123456780",
+      "membershipType": "Silver",
+      "joinDate": "2024-03-10",
+      "status": "Inactive"
     }
   ],
-  "comments": [
+
+  "payments": [
     {
       "id": 1,
-      "body": "some comment",
-      "postId": 1
+      "memberId": 1,
+      "amount": 2000,
+      "date": "2024-09-01",
+      "method": "UPI"
     }
   ],
+
   "profile": {
-    "name": "typicode"
+    "gymName": "FitLife Gym",
+    "location": "Pune",
+    "owner": "Admin"
   }
 }

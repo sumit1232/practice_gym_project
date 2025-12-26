@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Sidebar from './Sidebar';
 import Navbar from './Navbar';
+import axios from 'axios'
 
 const Members = () => {
   const [showForm, setShowForm] = useState(false);
   const [data, setData] = useState({ fullName: '', email: '', phoneNumber: '', plan: '', date: '', status: '' })
+  const [members, setMembers] = useState([]);
+
 
   const handleData = (e) => {
     console.log(e.target.value);
@@ -17,6 +20,21 @@ const Members = () => {
     alert('Form Submited....');
     setData({ fullName: '', email: '', phoneNumber: '', plan: '', date: '', status: '' })
     console.log(data);
+  }
+
+  useEffect(() => {
+    fetchData()
+  }, [])
+
+  const fetchData = async () => {
+    try {
+      const result = await axios.get('http://localhost:3000/members');
+      console.log(result.data);
+      setMembers(result.data)
+    } catch (error) {
+      console.log(`can't fetch API`, error);
+
+    }
   }
 
   return (
@@ -137,24 +155,29 @@ const Members = () => {
                 <thead>
                   <tr className="border-b">
                     <th className="p-2 text-left">Name</th>
-                    <th className="p-2 text-left">Plan</th>
+                    <th className="p-2 text-left">membershipType</th>
                     <th className="p-2 text-left">Status</th>
                     <th className="p-2 text-left">Actions</th>
                   </tr>
                 </thead>
 
                 <tbody>
-                  <tr className="border-b hover:bg-gray-50">
-                    <td className="p-2">Sumit</td>
-                    <td className="p-2">Monthly</td>
-                    <td className="p-2 text-green-600">Active</td>
-                    <td className="p-2">
-                      <button className="text-blue-600 hover:underline">
-                        Edit
-                      </button>
-                    </td>
-                  </tr>
+                  {members.map((member) => (
+                    <tr key={member.id} className="border-b hover:bg-gray-50">
+                      <td className="p-2">{member.name}</td>
+                      <td className="p-2">{member.membershipType}</td>
+                      <td className={`p-2 ${member.status === 'Active' ? 'text-green-600' : 'text-red-600'}`}>
+                        {member.status}
+                      </td>
+                      <td className="p-2">
+                        <button className="text-blue-600 hover:underline">
+                          Edit
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
                 </tbody>
+
               </table>
             </div>
 
